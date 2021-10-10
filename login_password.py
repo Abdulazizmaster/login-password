@@ -5,6 +5,7 @@ my_db = mysql.connector.connect(
     host='localhost',
     user='Abdulaziz',
     password='123123123',
+    database='login_password'
 )
 
 mycursor = my_db.cursor()
@@ -18,6 +19,7 @@ class Project:
         self.password = None
 
     def enterance(self):
+        self.clear_everything()
         self.first_msg()
         enter_ = input(">>> ").strip()
         options = ['1','2','3','4']
@@ -70,7 +72,12 @@ class Project:
                                                 -> An empty input""")
             us_password = input("Enter your password: ").strip()
 
-        
+        self.name = us_name
+        self.age = us_age
+        self.login = us_log
+        self.password = us_password
+        self.save_to_database()
+        self.enterance()
 
     def log_in(self):
         pass
@@ -101,6 +108,12 @@ class Project:
 
     def is_empty(self, str_):
         return not bool(str_)
+
+
+    def save_to_database(self):
+        mycursor.execute(f"insert into logn__pasword (name, age, login, password) values ('{self.name}','{self.age}','{self.login}','{self.password}')")
+        my_db.commit()
+
 
 person = Project()
 person.enterance()
